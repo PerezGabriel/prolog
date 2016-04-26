@@ -1,0 +1,181 @@
+En paradigma de programacion Logico, tenemos
+
+	- Individuos
+	- Predicados
+
+En PROLOG (usamos para programar), tenemos que declarar una "Base de conocimientos" en un archivo *.pl
+
+	en el archivo *.pl escribimos los predicados.
+
+	Un Predicado:
+			|- 1 Nombre
+			|- N Clausulas
+				|- Hechos
+				|- Reglas
+
+
+#############################################################################
+Ejercicio1.pl 																#
+____________________________________________________________________________#
+																			#
+personajeDeFiccion(drHouse).		// personajeDeFiccion es el Predicado 	#
+									// y drHouse es un Individuo.			#
+personajeDeFiccion(martinFierro).	// Que drHouse es un personajeDeFiccion	#
+personajeDeFiccion(lukeSkywalker).	// es un hecho, tiene siempre valor de 	#
+									// verdad "Verdadero"					#
+																			#
+#############################################################################
+
+Prolog trabaja con "Principio de universo cerrado", quiere decir que lo que está en la base de conocimiento (*.pl) 
+es "Verdadero" lo que no está ahí tiene valor de verdad "Falso".
+
+en la consola, cuando le pregunto:
+
+################################
+personajeDeFiccion(pikachu).
+
+################################
+
+Lo que hace prolog es "Patern Matching" con lo que tiene en la base de conocimiento, por eso dice que no, porque
+no lo encuentra.
+
+Para Prolog, las respuestas son "Yes" o "No".
+
+una consulta como la de pikachu, es una consulta "Individual" porque es sobre un individuo.
+
+Una consulta "Existencial" sería en la consola:
+
+################################
+personajeDeFiccion(_).
+
+yes ;
+yes ;
+yes.
+
+################################
+
+Tambien puedo preguntar con variable: (Las variables se escriben empezando con Mayus.)
+
+################################
+personajeDeFiccion(Alguien).  	// la respuesta a esta pregunta es "Yes", despues de yapa
+								// nos tira las posibilidades con las que matchea	
+Alguien = drHouse ;
+Alguien = martinFierro ;
+Alguien = luckSkywalker.
+
+################################
+
+En Prolog no existen los tipos, por eso puedo preguntarle por ejemplo:
+
+################################
+personajeDeFiccion(1).
+
+no.
+
+################################
+	
+NOTA: ** no se puede consultar por un predicado no definido **
+
+___________________________________________________________________________
+Los predicados se agrupan y se contabilizan sus hechos, así queda entonces:
+	
+	gato(gardfield).
+	gato(nermal).
+	raton(floyd).
+	perro(oddie).
+
+				ENTONCES:
+						|- gato está conformado por dos hechos (2 clausulas)
+						|- raton, por uno sólo (1 clausula)
+						|- perro, también, por uno sólo (1 clausula)
+
+	en este ejemplo hay, 3 Predicados, y 4 clausulas.
+___________________________________________________________________________
+
+
+Prolog lo más interesante que tiene es la capacidad de relacionar cosas:
+
+RELACIONANDO:
+
+#############################################################################
+Ejercicio8.pl 																#
+____________________________________________________________________________#
+																			#
+viveEn(jorge, flores).													 	#
+viveEn(jorge, flores).														#
+viveEn(manuel, flores).														#	
+viveEn(bernardo, flores).													#
+viveEn(elDiablo, villaCrespo).												#
+poeta(jorge).																#
+poligrafo(manuel).															#
+tahur(bernardo, ruso).														#
+																			#
+#############################################################################
+
+Se aprecia, que en la definicion de esta base de conocimiento, se establecen las relaciones
+viveEn/2  y thaur/2
+ - - - - - - - - - - - - - - - - - - -
+
+
+ REGLAS: (en escritura lógica una regla sería un => "Implica")
+ 
+Ejemplo.
+(ej 10)
+
+personajeDeFiccion(Alguien) :-            
+    personajeDeNovela(Alguien).
+personajeDeFiccion(Alguien) :-
+    personajeDeSerie(Alguien).
+personajeDeFiccion(Alguien) :-
+    personajeDePelicula(Alguien).
+Y se lee de la siguiente forma:
+
+si alguien es un personaje de novela, entonces es personaje de ficción
+si alguien es un personaje de serie, entonces es personaje de ficción
+si alguien es un personaje de película, entonces es personaje de ficción
+Dicho de otra forma, nos está diciendo que un personaje de ficción es cualquier individuo que cumpla alguna de las condiciones anteriores.
+
+
+ENTONCES: una clausula puede ser un hecho o una regla.**
+
+ --  --  - - - - - - - - - - - -  - - - - - - - -
+ IMPORTANTE, PRACTICANDO PIOLA
+
+ Variacion ejercicio 12.
+
+ nacio(aristoteles, -384).
+ nacio(platon, -427).
+
+% alguien es groso si es mortal y nacion antes q el año 0
+
+ groso(Alguien) :-
+ 	mortal(Alguien),
+ 	nacio(Alguien, Anio),
+ 	Anio < 0.
+
+groso(maradona).   % aca establecemos sin importar lo demas
+
+
+probando ejemplos en la consola:
+
+____________________________
+
+> x = x.
+yes.
+
+> x = x, x = 1.
+x = 1.
+
+> x = x, x = 1, x = 2.
+no.
+
+> x = y, x = 1, y = 2,
+no.
+
+> x = y, x = 1.
+x = 1;
+y = 1.
+
+____________________________
+
+HASTA ACÁ PODEMOS HACER LA GUIA 1 Y 2 en mumuki
