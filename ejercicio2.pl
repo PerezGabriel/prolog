@@ -118,19 +118,164 @@ compatibilidad(Chica, Nene):-	soniador(Chica), decidido(Nene).
 
 /* 2.9 */
 
-
-	
-
-
-
-
-
-
-
-
+esDeseable(Mujer):- 
+    esCompatible(Mujer, UnTipo),
+    esCompatible(Mujer, OtroTipo),
+    UnTipo \= OtroTipo.
+esDeseable(Hombre):-
+    esCompatible(UnaMinita, Hombre),
+    esCompatible(OtraMinita, Hombre),
+    UnaMinita \= OtraMinita.
 
 
 
+/* 2.10 */
+gustaDe(luis, nora).
+gustaDe(roque, ana).
+gustaDe(roque, nora).
+gustaDe(marcos, zulema).
+gustaDe(juan, nuria).
+gustaDe(zulema,ana).
+
+gustaDe(Chico, zulema):-
+    gustaDe(Chico, ana),
+    Chico \= zulema,
+    Chico \= juan. /* porque si no 2 veces lo compara con zulema */
+    
+
+gustaDe(juan, Chica):-
+    gustaDe(roque, Chica).
+
+/* 2.11 */
+compiten(Uno, Otro):-
+    gustaDe(Uno, Alguien),
+    gustaDe(Otro, Alguien),
+    Uno \= Otro.
+
+/* 2.12 */
+puedeIr(nico).
+puedeIr(daniel).
+
+puedeIr(Alguien):-
+    carilindo(Alguien).
+
+puedeIr(Alguien):-
+    alumno(Alguien, Profe),
+    puedeIr(Profe).
 
 
+alumno(luisa, daniel).
+alumno(juan, daniel).
+alumno(ana, luisa).
+alumno(diana, nico).
+alumno(nahuel, nico).
+alumno(tamara, nahuel).
+alumno(claudio, ruben).
+alumno(jose, ruben).
+alumno(alvaro, jose).
+alumno(alvaro, luisa).
 
+carilindo(brad).
+carilindo(leo).
+carilindo(johnny).
+
+simpatico(luciano).
+simpatico(lautaro).
+
+/* 2.13 */
+atraeA(mabel, rosa).
+atraeA(ana, rosa).
+atraeA(mara, celeste).
+atraeA(mara, lila).
+atraeA(pablo, azul).
+atraeA(adrian, amarillo).
+atraeA(ana, naranja).
+atraeA(juan, naranja).
+atraeA(mabel, rojo).
+
+mujer(mabel).
+mujer(ana).
+mujer(mara).
+
+varon(pablo).
+varon(adrian).
+varon(juan).
+
+portenio(mabel).
+portenio(mara).
+portenio(pablo).
+
+esMayor(ana).
+esMayor(pablo).
+
+pastel(celeste).
+pastel(rosa).
+pastel(lila).
+
+atraeA(Alguien, rojo):-
+    esMayor(Alguien),
+    varon(Alguien).
+
+atraeA(juan, Color):-
+    pastel(Color).
+
+atraeA(Persona, azul):-
+    mujer(Persona).
+
+atraeA(Persona, amarillo):-
+    portenio(Persona).
+
+/* 2.14 */
+puedeIluminarseCon(Dia, Color):-
+    cuandoAsistira(Persona,Dia),
+    cuandoAsistira(OtraPersona,Dia),
+    atraeA(Persona, Color),
+    atraeA(OtraPersona, Color),
+    distintoSexo(Persona, OtraPersona).
+
+cuandoAsistira(mabel, viernes).
+cuandoAsistira(ana, viernes).
+cuandoAsistira(adrian, viernes).
+cuandoAsistira(pablo, viernes).
+cuandoAsistira(mara, sabado).
+cuandoAsistira(mabel, sabado).
+cuandoAsistira(adrian, sabado).
+cuandoAsistira(juan, sabado).
+cuandoAsistira(juan, domingo).
+
+cuandoAsistira(Persona, domingo):-
+    esMayor(Persona).
+
+distintoSexo(Persona, OtraPersona):-
+    varon(Persona), mujer(OtraPersona).
+distintoSexo(OtraPersona, Persona):-
+    varon(Persona), mujer(OtraPersona).
+
+/* 2.15 */
+tipo(siguiente, entero, entero).
+tipo(anterior, entero, entero).
+tipo(longitud, lista, entero).
+
+tipoDeLaComposicion(Funo, Fdos, IN, OUT):-
+    tipo(Fdos, IN, OUTdos),
+    tipo(Funo, OUTdos, OUT).
+
+/* 2.16 */
+puedoUsar(sumar, num).
+puedoUsar(restar, num).
+puedoUsar(sumar, num).
+puedoUsar(dividir, fractional).
+puedoUsar(mostrar, show).
+
+heredaDe(fractional,num).
+heredaDe(int, num).
+heredaDe(int, show).
+heredaDe(float, show).
+heredaDe(double, show).
+heredaDe(fractional, show).
+heredaDe(double, show).
+heredaDe(bool, show).
+
+puedoUsar(Operacion,Typeclass):-
+    heredaDe(Typeclass, TypeSuper),
+    puedoUsar(Operacion, TypeSuper).
