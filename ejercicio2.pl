@@ -141,7 +141,6 @@ gustaDe(Chico, zulema):-
     gustaDe(Chico, ana),
     Chico \= zulema,
     Chico \= juan. /* porque si no 2 veces lo compara con zulema */
-    
 
 gustaDe(juan, Chica):-
     gustaDe(roque, Chica).
