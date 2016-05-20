@@ -78,7 +78,7 @@ esLegendario(barney, _).
 
 esLegendario(_, chiste(bueno, _, _)).
 
-esLegendario(_, cumpleaos( _, Invitados)):-
+esLegendario(_, cumpleanios( _, Invitados)):-
     not(member(cabra, Invitados)).
 
 fechaLegendaria(Fecha):-
