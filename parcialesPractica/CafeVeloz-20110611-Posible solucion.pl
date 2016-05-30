@@ -74,13 +74,16 @@ amigo(balbo, pedemonti).
 % Quien = balbo ;
 % El predicado debe funcionar a n niveles de profundidad posibles.
 % El predicado debe ser inversible para ambos argumentos.
-malaInfluencia(Jugador1, Jugador2):-puedeSerSuspendido(Jugador1),
-   puedeSerSuspendido(Jugador2),
-   seConocen(Jugador1, Jugador2).
+malaInfluencia(Jugador1, Jugador2):-
+  puedeSerSuspendido(Jugador1),
+  puedeSerSuspendido(Jugador2),
+  seConocen(Jugador1, Jugador2).
 
-seConocen(Jugador1, Jugador2):-amigo(Jugador1, Jugador2).
-seConocen(Jugador1, Jugador2):-amigo(Jugador1, JugadorX),
-   seConocen(JugadorX, Jugador2).
+seConocen(Jugador1, Jugador2):-
+  amigo(Jugador1, Jugador2).
+seConocen(Jugador1, Jugador2):-
+  amigo(Jugador1, JugadorX),
+  seConocen(JugadorX, Jugador2).
 
 % 4- Agregamos ahora la lista de médicos que atiende a cada jugador
 atiende(cahe, maradona).
@@ -95,8 +98,9 @@ atiende(cureta, basualdo).
 % ? chanta(X)
 % X = cahe
 % El predicado debe ser inversible.
-chanta(Medico):-medico(Medico),
-   forall(atiende(Medico, Futbolista), puedeSerSuspendido(Futbolista)).
+chanta(Medico):-
+  medico(Medico),
+  forall(atiende(Medico, Futbolista), puedeSerSuspendido(Futbolista)).
 
 %chantaNot(Medico):-atiende(Medico, _),
 %   not(
@@ -137,8 +141,11 @@ nivelAlteracion(compuesto(Compuesto), Cantidad):-composicion(Compuesto, Sustanci
 % - o que conocen a Maradona
 % La consulta medicoConProblemas(X) debería devolver X = cahe.
 % El predicado debe ser inversible.
-medicoConProblemas(Medico):-medico(Medico),
-     findall(Jugador, (atiende(Medico, Jugador), conflictivo(Jugador)), Jugadores), length(Jugadores, Cant), Cant > 2.
+medicoConProblemas(Medico):-
+  medico(Medico),
+  findall(Jugador, (atiende(Medico, Jugador), conflictivo(Jugador)), Jugadores), 
+  length(Jugadores, Cant),
+  Cant > 2.
 
 conflictivo(Jugador):-puedeSerSuspendido(Jugador).
 conflictivo(Jugador):-seConocen(maradona, Jugador).
@@ -156,10 +163,15 @@ medico(cureta).
 % Lista = [maradona, chamot]
 % Lista = [maradona, chamot, balbo]
 % etc.
-programaTVFantinesco(JugadoresTV):-setof(Jugador, puedeSerSuspendido(Jugador), Jugadores),
-      combinar(Jugadores, JugadoresTV).
+programaTVFantinesco(JugadoresTV):-
+  setof(Jugador, puedeSerSuspendido(Jugador), Jugadores),
+  combinar(Jugadores, JugadoresTV).
 
 combinar([], []).
-combinar([Jugador|Jugadores], [Jugador|JugadoresTV]):-combinar(Jugadores, JugadoresTV).
-combinar([_|Jugadores], JugadoresTV):-combinar(Jugadores, JugadoresTV).
+combinar([Jugador|Jugadores], [Jugador|JugadoresTV]):-
+  combinar(Jugadores, JugadoresTV).
+combinar([_|Jugadores], JugadoresTV):-
+  combinar(Jugadores, JugadoresTV).
 
+
+  
